@@ -76,3 +76,26 @@ def split_data(X, y, split_ratio=0.7):
     y_train, y_test = y[:split_index], y[split_index:]
 
     return X_train, X_test, y_train, y_test
+
+
+def plot_precision(real_values, predictions, threshold=0.7):
+    """
+    Check if the predictions are below a certain threshold.
+    """
+
+    plt.plot(real_values, label="Real")
+    plt.plot(predictions, label="Previsto", alpha=0.7)
+    plt.legend()
+    plt.title("Previsão no Teste")
+    plt.show()
+
+
+def calculate_returns(data, predictions, real_column="returns"):
+    """
+    Calculate the returns based on the predictions.
+    """
+    data["predicted_target"] = predictions
+    data["real_return"] = data[real_column] * data["predicted_target"]
+    data["cumulative_real_return"] = (1 + data["returns"]).cumprod()
+    data["cumulative_predicted_return"] = (1 + data["real_return"]).cumprod()
+    return data
