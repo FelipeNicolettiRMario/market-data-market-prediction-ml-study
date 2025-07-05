@@ -41,7 +41,10 @@ def add_features(df):
 
 
 def plot_cumulative_returns(
-    data, real_column="cumulative_real_return", predicted_columns=None
+    data,
+    real_column="cumulative_real_return",
+    predicted_columns=None,
+    target_column="target",
 ):
     if predicted_columns is None:
         predicted_columns = []
@@ -59,6 +62,16 @@ def plot_cumulative_returns(
             label=f"Cumulative Predicted Return ({column})",
             linestyle="--",
         )
+
+    buy_signals = data[data[target_column] == 1]
+    plt.scatter(
+        buy_signals.index,
+        buy_signals[real_column],
+        color="green",
+        label="Buy Signal",
+        marker="o",
+        alpha=0.7,
+    )
 
     plt.title("Comparison of Cumulative Real Return vs Predicted Returns")
     plt.xlabel("Date")
@@ -79,21 +92,16 @@ def split_data(X, y, split_ratio=0.7):
 
 
 def plot_precision(real_values, predictions, threshold=0.7):
-    """
-    Check if the predictions are below a certain threshold.
-    """
 
     plt.plot(real_values, label="Real")
-    plt.plot(predictions, label="Previsto", alpha=0.7)
+    plt.plot(predictions, label="Previsto", alpha=threshold)
     plt.legend()
     plt.title("Previsão no Teste")
     plt.show()
 
 
 def calculate_returns(data, predictions, real_column="returns"):
-    """
-    Calculate the returns based on the predictions.
-    """
+
     data["predicted_target"] = predictions
     data["real_return"] = data[real_column] * data["predicted_target"]
     data["cumulative_real_return"] = (1 + data["returns"]).cumprod()
