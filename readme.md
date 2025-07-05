@@ -1,4 +1,4 @@
-# 📈 Market Direction Prediction Using Logistic Regression
+# 📈 Market Direction Prediction Using Machine Learning
 
 Este projeto é um estudo prático de Machine Learning aplicado ao mercado financeiro, com foco em prever a direção do preço de um ativo utilizando **Regressão Logística**, **SVM**, etc...
 
