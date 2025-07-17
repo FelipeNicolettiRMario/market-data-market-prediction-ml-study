@@ -35,6 +35,9 @@ def add_features(df):
     df["ma_4"] = df["Close"].rolling(window=4).mean()
     df["ma_12"] = df["Close"].rolling(window=12).mean()
     df["ma_ratio"] = df["ma_4"] / df["ma_12"]
+    df["momentum_5"] = df["Close"] - df["Close"].shift(5)
+    df["momentum_10"] = df["Close"] - df["Close"].shift(10)
+    df["momentum_50"] = df["Close"] - df["Close"].shift(50)
     df.dropna(inplace=True)
 
     return df
